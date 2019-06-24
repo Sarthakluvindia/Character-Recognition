@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie-edge">
+	<title>OCR Image Select</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/imgareaselect.css">
+</head>
+<body>
+    <!-- Header -->
+<div class="header">
+  <img class="header-left" src="drdo.png" height="155" width="165">
+  <div>
+  <center>
+    <h1 style="color: #09418C; font-family: Gotham Book,sans-serif;"><center>Instruments Research & Development Establishment</center></h1>
+    <h3 style="color: #09418C; font-family: Gotham Book,sans-serif;"><center>HR Automation System</center></h3>
+    <h3 style="color: #09418C; font-family: Gotham Book,sans-serif;"><center>Optical Character Recognition</center></h3>
+  </center>
+  </div>
+</div>
+<!-- /Header -->
+	<form action="crop.php" method="post" enctype="multipart/form-data" style="text-align: center; font-weight: 600; margin-top: 20px;">
+    Upload Image: <input class="text_input" type="file" name="image" id="image" />
+    <input type="hidden" name="x1" value="" />
+    <input type="hidden" name="y1" value="" />
+    <input type="hidden" name="w" value="" />
+    <input type="hidden" name="h" value="" /><br><br>
+    <input class="submit_input" type="submit" name="submit" value="Submit" />
+	</form
+>
+    <p align="center"><img id="previewimage"/></p>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/jquery.imgareaselect.min.js"></script>
+	<script>
+    jQuery(function($) {
+ 
+        var p = $("#previewimage");
+        $("body").on("change", "#image", function(){
+ 
+            var imageReader = new FileReader();
+            imageReader.readAsDataURL(document.getElementById("image").files[0]);
+     
+            imageReader.onload = function (oFREvent) {
+                p.attr('src', oFREvent.target.result).fadeIn();
+            };
+        });
+ 
+        $('#previewimage').imgAreaSelect({
+            onSelectEnd: function (img, selection) {
+                $('input[name="x1"]').val(selection.x1);
+                $('input[name="y1"]').val(selection.y1);
+                $('input[name="w"]').val(selection.width);
+                $('input[name="h"]').val(selection.height);            
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
